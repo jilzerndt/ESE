@@ -25,13 +25,17 @@
 /* -- Macros used by student code
  * ------------------------------------------------------------------------- */
 
-#define TIMER_DURATION_LEFT  400u
-#define TIMER_DURATION_RIGHT 400u
-#define TIMER_DURATION_SPIN  500u
+#define TIMER_DURATION_ROTATE  400u
+#define TIMER_DURATION_SPIN    500u
 
-#define TEXT_OPENED                 "OPENED         "
-#define TEXT_CLOSED					"CLOSED         "
-#define TEXT_LOCKED					"LOCKED         "
+#define TEXT_DOOR_OPEN      "DOOR_OPEN      "
+#define TEXT_IDLE           "IDLE           "
+#define TEXT_FILL_WATER     "FILL_WATER     "
+#define TEXT_HEAT_WATER     "HEAT_WATER     "
+#define TEXT_ROTATE         "ROTATE         "
+#define TEXT_EMPTY_WATER    "EMPTY_WATER    "
+#define TEXT_SPIN_DRY       "SPIN_DRY       "
+#define TEXT_SHUT_DOWN      "SHUT_DOWN      "
 
 #define HIGH    1u
 #define LOW     0u
@@ -40,8 +44,8 @@
 /* Local variables
  * ------------------------------------------------------------------------- */
 
-static state_t state = OPENED;
-static uint8_t floater_position = LOW;
+static state_t state = DOOR_OPEN;
+static uint8_t water_level = LOW;
 
 
 /* Public function definitions
@@ -53,8 +57,14 @@ static uint8_t floater_position = LOW;
 void fsm_init(void)
 {
     action_handler_init();
-    ah_lcd_write(TEXT_OPENED);
-    state = OPENED;
+    // Initial state actions
+    ah_heater_off();
+    ah_close_valve();
+    ah_motor_off();
+    ah_pump_off();
+    ah_unlock_door();
+    ah_lcd_write(TEXT_DOOR_OPEN);
+    state = DOOR_OPEN;
 }
 
 
@@ -63,119 +73,116 @@ void fsm_init(void)
  */
 void fsm_handle_event(event_t event)
 {
-    // State machine implementation according to your model from last week's exercise.
-	
-    if ((event == BUTTON_STOP) && (state != OPENED))
-    {
-        ah_motor_off();
-        ah_close_valve();
-        ah_heater_off();
-        ah_pump_on();
-        timer_stop();
-        state = STOPPING;
-    }
-    
+    // State machine implementation according to personal washing machine design
+
+    // Track water level based on floater events
     if (event == FLOATER_HIGH)
     {
-        floater_position = HIGH;
+        water_level = HIGH;
     }
     else if (event == FLOATER_LOW)
     {
-        floater_position = LOW;
+        water_level = LOW;
     }
-    
+
+    // Handle STOP button - transitions to SHUT_DOWN from most states
+    if ((event == BUTTON_STOP) && (state != DOOR_OPEN) && (state != IDLE) && (state != SHUT_DOWN))
+    {
+        ah_motor_off();
+        ah_heater_off();
+        ah_close_valve();
+        ah_pump_on();
+        timer_stop();
+        ah_lcd_write(TEXT_SHUT_DOWN);
+        state = SHUT_DOWN;
+        return;  // Exit early to handle stop immediately
+    }
+
     switch (state)
     {
-        case OPENED:
+        case DOOR_OPEN:
             if (event == DOOR_CLOSED)
             {
-                ah_lcd_write(TEXT_CLOSED);
-                state = CLOSED;
+                ah_lcd_write(TEXT_IDLE);
+                state = IDLE;
             }
             break;
-        case CLOSED:
-            switch (event)
+
+        case IDLE:
+            if (event == DOOR_OPENED)
             {
-                case DOOR_OPENED:
-                    ah_lcd_write(TEXT_OPENED);
-                    state = OPENED;
-                    break;
-                case BUTTON_WASH:
-                    ah_lcd_write(TEXT_LOCKED);
-                    ah_lock_door();
-                    ah_open_valve();
-                    state = FILLING;
-                    break;
-                case BUTTON_SPIN:
-                    ah_lcd_write(TEXT_LOCKED);
-                    ah_lock_door();
-                    ah_motor_on(LEFT, FAST);
-                    timer_start(TIMER_DURATION_SPIN);
-                    state = SPIN;
-                    break;
-                default:
-                    break;
+                ah_lcd_write(TEXT_DOOR_OPEN);
+                state = DOOR_OPEN;
+            }
+            else if (event == BUTTON_WASH)  // START_BTN
+            {
+                ah_lock_door();
+                ah_open_valve();
+                ah_lcd_write(TEXT_FILL_WATER);
+                state = FILL_WATER;
             }
             break;
-        case FILLING:
-            if (floater_position == HIGH)
+
+        case FILL_WATER:
+            if (water_level == HIGH)  // WATER_FULL
             {
                 ah_close_valve();
                 ah_heater_on();
-                state = HEATING;
+                ah_lcd_write(TEXT_HEAT_WATER);
+                state = HEAT_WATER;
             }
             break;
-        case HEATING:
-            if (event == TEMPERATURE_HOT)
+
+        case HEAT_WATER:
+            if (event == TEMPERATURE_HOT)  // TEMP_HOT
             {
                 ah_heater_off();
-                ah_motor_on(RIGHT, SLOW);
-                timer_start(TIMER_DURATION_RIGHT);
-                state = AGITATE_RIGHT;
-            }
-            break;
-        case AGITATE_RIGHT:
-            if (event == TIME_OUT)
-            {
-                ah_motor_off();
+                timer_start(TIMER_DURATION_ROTATE);
                 ah_motor_on(LEFT, SLOW);
-                timer_start(TIMER_DURATION_LEFT);
-                state = AGITATE_LEFT;
+                ah_lcd_write(TEXT_ROTATE);
+                state = ROTATE;
             }
             break;
-        case AGITATE_LEFT:
+
+        case ROTATE:
             if (event == TIME_OUT)
             {
                 ah_motor_off();
                 ah_pump_on();
-                state = DRAIN;
+                ah_lcd_write(TEXT_EMPTY_WATER);
+                state = EMPTY_WATER;
             }
             break;
-        case DRAIN:
-            if (floater_position == LOW)
+
+        case EMPTY_WATER:
+            if (water_level == LOW)  // WATER_EMPTY
             {
                 ah_pump_off();
-                ah_motor_on(LEFT, FAST);
                 timer_start(TIMER_DURATION_SPIN);
-                state = SPIN;
+                ah_motor_on(LEFT, FAST);
+                ah_lcd_write(TEXT_SPIN_DRY);
+                state = SPIN_DRY;
             }
             break;
-        case SPIN:
+
+        case SPIN_DRY:
             if (event == TIME_OUT)
             {
                 ah_motor_off();
-                ah_unlock_door();
-                ah_lcd_write(TEXT_CLOSED);
-                state = CLOSED;
+                ah_close_valve();
+                ah_pump_on();
+                ah_lcd_write(TEXT_SHUT_DOWN);
+                state = SHUT_DOWN;
             }
             break;
-        case STOPPING:
-            if (floater_position == LOW)
+
+        case SHUT_DOWN:
+            if (water_level == LOW)  // WATER_EMPTY
             {
                 ah_pump_off();
                 ah_unlock_door();
-                ah_lcd_write(TEXT_CLOSED);
-                state = CLOSED;
+                ah_lcd_write(TEXT_IDLE);
+                state = IDLE;
             }
             break;
     }
