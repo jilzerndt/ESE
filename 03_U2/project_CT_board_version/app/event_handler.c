@@ -27,18 +27,19 @@
 /* -- Macros for accessing CT Board
  * ------------------------------------------------------------------------- */
 
-#define PORT_INPUT (CT_DIPSW->BYTE.S7_0)
+#define PORT_INPUT (CT_GPIO->IN.BYTE.P1)
 
 /* -- Macros to mask input ports
  * ------------------------------------------------------------------------- */
 
-#define MASK_BUTTON_STOP        (0x01)
-#define MASK_BUTTON_SPIN        (0x02)
-#define MASK_BUTTON_WASH        (0x04)
-#define MASK_DOOR        	    (0x08)
-#define MASK_FLOATER		    (0x10)
-#define MASK_THERMOSTAT         (0x20)
-#define MASK_CLEAR_INPUT		(0x3F)
+#define MASK_FLOATER_HIGH     (0x01)
+#define MASK_FLOATER_LOW      (0x04)
+#define MASK_BUTTON_STOP      (0x08)
+#define MASK_BUTTON_SPIN      (0x10)
+#define MASK_BUTTON_WASH      (0x20)
+#define MASK_THERMOSTAT       (0x40)
+#define MASK_DOOR_OPEN        (0x80)
+#define MASK_CLEAR_INPUTPIN_1 (0xFD)
 
 /* Public function definitions
  * ------------------------------------------------------------------------- */
@@ -56,11 +57,12 @@ event_t eh_get_event(void)
     uint8_t edge_positive = 0;
     uint8_t edge_negative = 0;
 
+    static uint16_t timer_old = 0u;
     uint16_t timer;
 
     /* Read the input port */
-    port_value = PORT_INPUT & MASK_CLEAR_INPUT;
-    port_value_control = PORT_INPUT & MASK_CLEAR_INPUT;
+    port_value = PORT_INPUT & MASK_CLEAR_INPUTPIN_1;
+    port_value_control = PORT_INPUT & MASK_CLEAR_INPUTPIN_1;
 
     /* Compare the input to ignore spikes */
     /* Detect edges: Set the corresponding bit for each detected edge */
@@ -75,44 +77,43 @@ event_t eh_get_event(void)
 
     /// Add here the events that will be needed for your washing machine
 
-		if (edge_positive & MASK_BUTTON_STOP)
-		{
-			event = BUTTON_STOP;
-		} 
-		else if (edge_positive & MASK_BUTTON_WASH)
-		{
-			event = BUTTON_WASH;
-		} 
-		else if (edge_positive & MASK_BUTTON_SPIN)
-		{
-			event = BUTTON_SPIN;
-		} 
-		else if (edge_positive & MASK_DOOR)
-		{
-			event = DOOR_OPENED;
-		}
-		else if (edge_negative & MASK_DOOR)
-		{
-			event = DOOR_CLOSED;
-		}
-		else if (edge_positive & MASK_FLOATER)
-		{
-			event = FLOATER_HIGH;
-		}
-		else if (edge_negative & MASK_FLOATER)
-		{
-			event = FLOATER_LOW;
-		}
-		else if (edge_positive & MASK_THERMOSTAT)
-		{
-			event = TEMPERATURE_HOT;
-		}
-        else if (timer == 0)
-        {
-            event = TIME_OUT;
-        }
+    // Check button events (positive edge = button pressed)
+    if (edge_positive & MASK_BUTTON_STOP) {
+        event = BUTTON_STOP;
+    }
+    else if (edge_positive & MASK_BUTTON_WASH) {
+        event = BUTTON_WASH;
+    }
+    else if (edge_positive & MASK_BUTTON_SPIN) {
+        event = BUTTON_SPIN;
+    }
+    // Check door events
+    else if (edge_positive & MASK_DOOR_OPEN) {
+        event = DOOR_OPENED;
+    }
+    else if (edge_negative & MASK_DOOR_OPEN) {
+        event = DOOR_CLOSED;
+    }
+    // Check floater events
+    else if (edge_positive & MASK_FLOATER_HIGH) {
+        event = FLOATER_HIGH;
+    }
+    else if (edge_positive & MASK_FLOATER_LOW) {
+        event = FLOATER_LOW;
+    }
+    // Check thermostat event
+    else if (edge_positive & MASK_THERMOSTAT) {
+        event = TEMPERATURE_HOT;
+    }
+    // Check timer timeout (timer_old was non-zero, now timer is zero)
+    else if ((timer_old != 0) && (timer == 0)) {
+        event = TIME_OUT;
+    }
 
     /// END: To be programmed
+
+    /* Update timer_old */
+    timer_old = timer;
 
     return event;
 }

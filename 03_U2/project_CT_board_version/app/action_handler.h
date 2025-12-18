@@ -22,6 +22,9 @@
 #include <stdint.h>
 
 
+/* -- Type definitions
+ * ------------------------------------------------------------------------- */
+
 typedef enum {
     LEFT,
     RIGHT
@@ -48,28 +51,58 @@ void action_handler_init(void);
 void ah_lcd_write(char text[]);
 
 
-void ah_lock_door();
+/*
+ * Lock the door.
+ */
+void ah_lock_door(void);
 
-void ah_unlock_door();
-
-
-void ah_open_valve();
-
-void ah_close_valve();
-
-
-void ah_heater_on();
-
-void ah_heater_off();
+/*
+ * Unlock the door.
+ */
+void ah_unlock_door(void);
 
 
+/*
+ * Open the water valve.
+ */
+void ah_open_valve(void);
+
+/*
+ * Close the water valve.
+ */
+void ah_close_valve(void);
+
+
+/*
+ * Turn heater on.
+ */
+void ah_heater_on(void);
+
+/*
+ * Turn heater off.
+ */
+void ah_heater_off(void);
+
+
+/*
+ * Turn motor on with specified direction and speed.
+ */
 void ah_motor_on(motor_direction_t motor_direction, motor_speed_t motor_speed);
 
-void ah_motor_off();
+/*
+ * Turn motor off.
+ */
+void ah_motor_off(void);
 
 
-void ah_pump_on();
+/*
+ * Turn pump on.
+ */
+void ah_pump_on(void);
 
-void ah_pump_off();
+/*
+ * Turn pump off.
+ */
+void ah_pump_off(void);
 
 #endif

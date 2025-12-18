@@ -10,7 +10,7 @@
       <TargetName>Target 1</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6240000::V6.24::ARMCLANG</pCCUsed>
+      <pCCUsed>6190000::V6.19::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -477,7 +477,7 @@
       <filter>
         <targetInfos/>
       </filter>
-      <package name="CTBoard14_DFP" vendor="InES">
+      <package name="CTBoard14_DFP" schemaVersion="1.1" supportContact="https://ennis.zhaw.ch/" url="https://ennis.zhaw.ch/pack/" vendor="InES" version="4.0.2">
         <targetInfos>
           <targetInfo name="Target 1"/>
         </targetInfos>

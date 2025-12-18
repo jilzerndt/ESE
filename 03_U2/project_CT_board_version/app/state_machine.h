@@ -30,10 +30,12 @@
 
 typedef enum {
     DOOR_OPEN,
+    // add your states
     IDLE,
     FILL_WATER,
     HEAT_WATER,
-    ROTATE,
+    ROTATE_RIGHT,
+    ROTATE_LEFT,
     EMPTY_WATER,
     SPIN_DRY,
     SHUT_DOWN

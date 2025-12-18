@@ -93,12 +93,12 @@ ARM Macro Assembler    Page 2
               EFBEADDE 
 Command Line: --debug --xref --diag_suppress=9931,A1950W --cpu=Cortex-M0 --depe
 nd=.\build\datainit_ctboard.d -o.\build\datainit_ctboard.o -I.\RTE\_Target_1 -I
-C:\Users\domin\AppData\Local\Arm\Packs\InES\CTBoard14_DFP\4.0.4\Device\Include 
--IC:\Users\domin\AppData\Local\Arm\Packs\InES\CTBoard14_DFP\4.0.4\Device\Includ
-e\m0 -IC:\Users\domin\AppData\Local\Arm\Packs\InES\CTBoard14_DFP\4.0.4\HAL\Incl
-ude --predefine="__EVAL SETA 1" --predefine="__UVISION_VERSION SETA 543" --pred
-efine="_RTE_ SETA 1" --list=.\build\datainit_ctboard.lst RTE/Device/CT_Board_HS
-14_M0/datainit_ctboard.s
+C:\Users\kuex\AppData\Local\Arm\Packs\InES\CTBoard14_DFP\4.0.4\Device\Include -
+IC:\Users\kuex\AppData\Local\Arm\Packs\InES\CTBoard14_DFP\4.0.4\Device\Include\
+m0 -IC:\Users\kuex\AppData\Local\Arm\Packs\InES\CTBoard14_DFP\4.0.4\HAL\Include
+ --predefine="__EVAL SETA 1" --predefine="__UVISION_VERSION SETA 538" --predefi
+ne="_RTE_ SETA 1" --predefine="_RTE_ SETA 1" --list=.\build\datainit_ctboard.ls
+t RTE/Device/CT_Board_HS14_M0/datainit_ctboard.s
 
 
 

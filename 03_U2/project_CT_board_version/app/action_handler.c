@@ -25,21 +25,19 @@
 /* -- Macros for accessing CT Board
  * ------------------------------------------------------------------------- */
 
-#define PORT_OUTPUT (CT_LED->WORD)
+#define PORT_OUTPUT (CT_GPIO->OUT.BYTE.P1)
 
 
 /* -- Macros for washing machine
  * ------------------------------------------------------------------------- */
 
-#define MASK_DOOR_LOCK          (0x00000001);
-#define MASK_VALVE              (0x00000010);
-#define MASK_HEATER             (0x00000100);
-#define MASK_PUMP               (0x00001000);
-#define MASK_MOTOR_RIGHT_SLOW   (0x00010000);
-#define MASK_MOTOR_RIGHT_FAST   (0x00100000);
-#define MASK_MOTOR_LEFT_SLOW    (0x01000000);
-#define MASK_MOTOR_LEFT_FAST    (0x10000000);
-#define MASK_MOTOR_OFF          (0x0000FFFF);
+#define MASK_DOOR_LOCK   (0x7f)
+#define MASK_VALVE_OPEN  (0xbf)
+#define MASK_HEATER_ON   (0xdf)
+#define MASK_MOTOR_SLOW  (0xf7)
+#define MASK_MOTOR_FAST  (0xfb)
+#define MASK_MOTOR_RIGHT (0xfd)
+#define MASK_PUMP_ON     (0xef)
 
 
 /* Public function definitions
@@ -49,10 +47,14 @@
  */
 void action_handler_init(void)
 {
+
+    /* Deactivate low-active output */
+    PORT_OUTPUT = 0xff;
     /// STUDENTS: To be programmed
 
-    PORT_OUTPUT = 0;
-	
+    // All outputs are deactivated (high = inactive for low-active outputs)
+    // Initial state: everything off, door unlocked, valve closed
+
     /// END: To be programmed
 }
 
@@ -67,77 +69,109 @@ void ah_lcd_write(char text[])
 }
 
 
-void ah_lock_door()
+/*
+ * See header file
+ */
+void ah_lock_door(void)
 {
-    PORT_OUTPUT |= MASK_DOOR_LOCK;
+    PORT_OUTPUT &= MASK_DOOR_LOCK;  // Clear bit 7 to lock
 }
 
-void ah_unlock_door()
+/*
+ * See header file
+ */
+void ah_unlock_door(void)
 {
-    PORT_OUTPUT &= ~MASK_DOOR_LOCK;
-}
-
-
-void ah_open_valve()
-{
-    PORT_OUTPUT |= MASK_VALVE;
-}
-
-void ah_close_valve()
-{
-    PORT_OUTPUT &= ~MASK_VALVE;
+    PORT_OUTPUT |= ~MASK_DOOR_LOCK;  // Set bit 7 to unlock
 }
 
 
-void ah_heater_on()
+/*
+ * See header file
+ */
+void ah_open_valve(void)
 {
-    PORT_OUTPUT |= MASK_HEATER;
+    PORT_OUTPUT &= MASK_VALVE_OPEN;  // Clear bit 6 to open
 }
 
-void ah_heater_off()
+/*
+ * See header file
+ */
+void ah_close_valve(void)
 {
-    PORT_OUTPUT &= ~MASK_HEATER;
-}
-
-
-void ah_pump_on()
-{
-    PORT_OUTPUT |= MASK_PUMP;
-}
-
-void ah_pump_off()
-{
-    PORT_OUTPUT &= ~MASK_PUMP;
+    PORT_OUTPUT |= ~MASK_VALVE_OPEN;  // Set bit 6 to close
 }
 
 
+/*
+ * See header file
+ */
+void ah_heater_on(void)
+{
+    PORT_OUTPUT &= MASK_HEATER_ON;  // Clear bit 5 to turn on
+}
+
+/*
+ * See header file
+ */
+void ah_heater_off(void)
+{
+    PORT_OUTPUT |= ~MASK_HEATER_ON;  // Set bit 5 to turn off
+}
+
+
+/*
+ * See header file
+ */
 void ah_motor_on(motor_direction_t motor_direction, motor_speed_t motor_speed)
 {
-    if(motor_direction == LEFT)
-    {
-        if(motor_speed == SLOW)
-        {
-            PORT_OUTPUT |= MASK_MOTOR_LEFT_SLOW;
-        } 
-        else
-        {
-            PORT_OUTPUT |= MASK_MOTOR_LEFT_FAST;
+    // First turn off motor to clear any previous state
+    ah_motor_off();
+
+    // Set motor direction and speed
+    // Direction: bit 1 (0=right, 1=left)
+    // Speed: bit 3 for slow, bit 2 for fast
+    if (motor_direction == RIGHT) {
+        PORT_OUTPUT &= MASK_MOTOR_RIGHT;  // Clear bit 1 for right
+        if (motor_speed == SLOW) {
+            PORT_OUTPUT &= MASK_MOTOR_SLOW;  // Clear bit 3 for slow
+        } else {
+            PORT_OUTPUT &= MASK_MOTOR_FAST;  // Clear bit 2 for fast
         }
-    }
-    else
-    {
-        if(motor_speed == SLOW)
-        {
-            PORT_OUTPUT |= MASK_MOTOR_RIGHT_SLOW;
-        } 
-        else
-        {
-            PORT_OUTPUT |= MASK_MOTOR_RIGHT_FAST;
+    } else {  // LEFT
+        // Keep bit 1 set for left (don't clear it)
+        if (motor_speed == SLOW) {
+            PORT_OUTPUT &= MASK_MOTOR_SLOW;  // Clear bit 3 for slow
+        } else {
+            PORT_OUTPUT &= MASK_MOTOR_FAST;  // Clear bit 2 for fast
         }
     }
 }
 
-void ah_motor_off()
+/*
+ * See header file
+ */
+void ah_motor_off(void)
 {
-    PORT_OUTPUT &= MASK_MOTOR_OFF;
+    // Set all motor control bits high to turn off (low-active)
+    PORT_OUTPUT |= ~MASK_MOTOR_RIGHT;  // Set bit 1
+    PORT_OUTPUT |= ~MASK_MOTOR_SLOW;   // Set bit 3
+    PORT_OUTPUT |= ~MASK_MOTOR_FAST;   // Set bit 2
+}
+
+
+/*
+ * See header file
+ */
+void ah_pump_on(void)
+{
+    PORT_OUTPUT &= MASK_PUMP_ON;  // Clear bit 4 to turn on
+}
+
+/*
+ * See header file
+ */
+void ah_pump_off(void)
+{
+    PORT_OUTPUT |= ~MASK_PUMP_ON;  // Set bit 4 to turn off
 }

@@ -46,11 +46,12 @@ int main(void)
 {
     /// STUDENTS: To be programmed
 
+    // Initialize state machine and timer
     fsm_init();
     timer_init();
-    
-    while (1)
-    {
+
+    // Main event loop
+    while (1) {
         fsm_handle_event(eh_get_event());
     }
 

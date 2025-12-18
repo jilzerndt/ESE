@@ -29,14 +29,14 @@ typedef enum {
     NO_EVENT,
     TIME_OUT,
     // List events needed for your implementation
-	BUTTON_STOP,
-	BUTTON_WASH,
-	BUTTON_SPIN,
-	DOOR_OPENED,
-	DOOR_CLOSED,
-	FLOATER_HIGH,
-	FLOATER_LOW,
-	TEMPERATURE_HOT
+    DOOR_OPENED,
+    DOOR_CLOSED,
+    BUTTON_WASH,
+    BUTTON_SPIN,
+    BUTTON_STOP,
+    FLOATER_HIGH,
+    FLOATER_LOW,
+    TEMPERATURE_HOT
 } event_t;
 
 
