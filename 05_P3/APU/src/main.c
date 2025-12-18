@@ -97,9 +97,13 @@ int main(void) {
     printf("\nTesting AES256\n");
 
     // TODO geeignete Zeitmessung einbauen
+    clock_gettime(CLOCK_REALTIME, &time_start);
 
     AES_APU_init_ctx_iv(key, iv);
     AES_APU_encrypt_buffer(enc_a, text_length);
+
+    clock_gettime(CLOCK_REALTIME, &time_stop);
+
     AES_APU_init_ctx_iv(key, iv);
     AES_APU_decrypt_buffer(dec_a, text_length);
 

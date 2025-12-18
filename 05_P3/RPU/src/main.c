@@ -100,7 +100,11 @@ int main(int argc, char *argv[]) {
         perror("AES RPU startup failed. exit program.\n");
         return 2;
     }
+
+    clock_gettime(CLOCK_REALTIME, &time_start);
     AES_RPU_encrypt_buffer(key, iv, enc_a, text_length);
+    clock_gettime(CLOCK_REALTIME, &time_stop);
+
     AES_RPU_decrypt_buffer(key, iv, dec_a, text_length);
     success = AES_RPU_stop("aes_rpu_rtos.elf");
     if (0 > success) {
