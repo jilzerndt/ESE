@@ -41,27 +41,32 @@ cannot test on hardware because Ubuntu but should work?
 ### aufgabe 1 - setup
 [x] setup für Messung (please fucking help)
 ### aufgabe 2 - aes verschlüsselung
-[] theorie fragen antworten
-[] implement state machine
-[] energy measurements and diagram mit oszi
+[x] theorie fragen antworten
+[x] implement state machine
+[x] energy measurements and diagram mit oszi
 [] show in lab
 
 ## P3 - AES auf APU und RPU
-[] understand background context
+[x] understand background context
 ### APU
-[] understand code
-[] Zeitstempel setzen und builden
-[] auf board ausführen
-[] time measurements for different message sizes
+[x] understand code
+[x] Zeitstempel setzen und builden
+[x] auf board ausführen
+[x] time measurements for different message sizes
 ### RPU
-[] understand code and answer theory questions in pdf
-[] auf board schmeissen
-[] A53 step-by-step
-[] vs code und ergänzen was fehlt
-[] theorie fragen RPU
-[] timing measurements RPU
+[x] understand code and answer theory questions in pdf
+[x] auf board schmeissen
+[x] A53 step-by-step
+[x] vs code und ergänzen was fehlt
+[x] theorie fragen RPU
+[x] timing measurements RPU
 [] performance comparison und mit dozenten diskutieren
 
 ## P4 - AES in FPGA und CSU
 
-ii check garnix meh
+### 4.1 FPGA
+Zugriff auf Speicherbereich mit `mmap`
+
+### 4.2 CSU
+Programm und Zeitmessungen haben (glaube) funktioniert
+
