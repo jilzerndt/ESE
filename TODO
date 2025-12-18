@@ -12,13 +12,15 @@
 [x] implement state machine (again?????? I hate windows)
 [x] implement action handler (leds)
 [x] implement event handler (switches)
-[] run on CT board and show in lab
+[x] run on CT board 
+[] show in lab
 
 ## U3 - implement washing machine for new HW (HW abstraction)
 - state machine stays exactly the same
 [x] implement action handler (gpio and active low)
 [x] implement event handler (real sensors)
-[] run and show in lab
+[x] run 
+[] show in lab
 
 ## P2 - Energy measurement
 ### aufgabe 1 - setup
@@ -43,7 +45,8 @@
 [x] vs code und ergänzen was fehlt
 [x] theorie fragen RPU
 [x] timing measurements RPU
-[] performance comparison und mit dozenten diskutieren
+[x] performance comparison 
+[] mit dozenten diskutieren
 
 ## P4 - AES in FPGA und CSU
 
