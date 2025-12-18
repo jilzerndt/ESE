@@ -61,7 +61,8 @@ static void AES_CSU_xcrypt_buffer(int enc_dir, const uint8_t* key, const uint8_t
 
 	/*  create socket of type AF_ALG */
     // STUDENTS TASK: open a socket
-	
+	sd = socket(AF_ALG, SOCK_SEQPACKET, 0);
+
 	if (sd == -1) {
 		printf("socket failed: %s\n", strerror(errno));
 		return;
@@ -69,9 +70,15 @@ static void AES_CSU_xcrypt_buffer(int enc_dir, const uint8_t* key, const uint8_t
 
 	/* create structure and select encryption algorithm */
 	// STUDENTS TASK: define struct sockaddr_alg with the type 'skcipher' and name 'cbc(aes)'
+	struct sockaddr_alg sa = {
+		.salg_family = AF_ALG,
+		.salg_type   = "skcipher",
+		.salg_name   = "cbc(aes)"
+	};
 
 	/* bind socket to selected algorithm */
 	// STUDENTS TASK: set the crypto algorithm
+	ret = bind(sd, (struct sockaddr *) &sa, sizeof(sa));
 
 	if (ret == -1) {
 		printf("bind failed: %s\n", strerror(errno));
@@ -81,6 +88,7 @@ static void AES_CSU_xcrypt_buffer(int enc_dir, const uint8_t* key, const uint8_t
 
 	/* set key for aes encryption */
 	// STUDENTS TASK: set the key and key length
+	ret = setsockopt(sd, SOL_ALG, ALG_SET_KEY, key, AES_KEY_LENGTH);
 
 	if (ret == -1) {
 		printf("setsockopt failed: %s\n", strerror(errno));
@@ -125,6 +133,7 @@ static void AES_CSU_xcrypt_buffer(int enc_dir, const uint8_t* key, const uint8_t
 
 	/* send data to encrypt/decrypt */
 	// STUDENTS TASK: send message buffer through socket
+	ret = sendmsg(fd, &msg, 0);
 
 	if (ret == -1) {
 		printf("sendmsg failed: %s\n", strerror(errno));
