@@ -29,16 +29,14 @@
  * ------------------------------------------------------------------------- */
 
 typedef enum {
-    OPENED,
-    // add your states
-    CLOSED,
-	STOPPING,
-	FILLING,
-	HEATING,
-	AGITATE_RIGHT,
-	AGITATE_LEFT,
-	DRAIN,
-	SPIN
+    DOOR_OPEN,
+    IDLE,
+    FILL_WATER,
+    HEAT_WATER,
+    ROTATE,
+    EMPTY_WATER,
+    SPIN_DRY,
+    SHUT_DOWN
 } state_t;
 
 
