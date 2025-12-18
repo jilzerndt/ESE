@@ -40,3 +40,20 @@ General Feedback:
 
 
 ### Improve your requirements according to the feedback received:
+
+1. No Green Lights at Same Time:
+The traffic light system must make sure that the north-south and east-west directions never both have green lights at the same time, otherwise cars might crash or there could be a situation where the cars basically "deadlock" themselves.
+
+2. Yellow Light Before Red
+When a traffic light changes from green to red, it must show yellow for 3 seconds first so drivers have time to slow down.
+
+3. Minimum Green Time
+Each direction should get at least 15 seconds of green light so enough cars can pass through the intersection.
+
+4. Red + Yellow Before Green
+Before the light turns green, it should show red and yellow together for 2 seconds to warn drivers that green is coming soon.
+
+5. Safety Gap Between Switches
+When switching from one direction to another, all lights should be red for 2 seconds to clear the intersection.
+
+6. Pedestrians

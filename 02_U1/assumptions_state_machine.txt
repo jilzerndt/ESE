@@ -1,0 +1,3 @@
+- For safety and realism, Schleudern first drains until FLOATER_LOW before spinning.
+- Heater off before rotation: Enforced by transitioning from Heating on TEMPERATURE_HOT with Heater off before entering any rotate state.
+- On power-on we assume an Idle safe baseline (all actuators off, door closed, valve closed, pump off, motor off, heater off).
