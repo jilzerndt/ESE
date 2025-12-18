@@ -96,9 +96,7 @@ int main(void) {
 
     printf("\nTesting AES256\n");
 
-    clock_gettime(CLOCK_REALTIME, &time_start);
     AES_FPGA_encrypt_buffer(key, iv, enc_a, text_length);
-    clock_gettime(CLOCK_REALTIME, &time_stop);
     AES_FPGA_decrypt_buffer(key, iv, dec_a, text_length);
 
     printf("\n");

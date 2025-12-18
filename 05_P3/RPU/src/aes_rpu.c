@@ -321,13 +321,6 @@ int AES_RPU_start(char *firmware) {
 	// TODO BEGIN STUDENTS
     // start the firmware...
 
-	fp = fopen("/sys/class/remoteproc/remoteproc0/state", "w");
-	if (fp == NULL) {
-		printf("Error starting firmware %s\n", firmware);
-		return -1;
-	}
-	fprintf(fp, "start");
-	fclose(fp);
 	
 	// TODO END STUDENTS
 
@@ -413,13 +406,6 @@ int AES_RPU_stop(char *firmware) {
 	// TODO BEGIN STUDENTS 
 	// stop the firmware
 	
-	FILE *fp = fopen("/sys/class/remoteproc/remoteproc0/state", "w");
-	if (fp == NULL) {
-		printf("Error stopping firmware %s\n", firmware);
-		return -1;
-	}
-	fprintf(fp, "stop");
-	fclose(fp);
 	
 	// TODO END STUDENTS
 

@@ -30,7 +30,7 @@ endif
 
 
 $(OBJ_DIR)/%.o: %.c $(wildcard $(SRC_DIR)/*.h)
-	$(call MKDIR,$(DIRS))
+	$(call MKDIR,$(call FixPath,$(DIRS)))
 	$(CC) $(CFLAGS) -c $< -o $@ -I $(IDIR)
 
 $(NAME).elf: $(OBJ_FILES) $(wildcard $(LDIR)/*.a)

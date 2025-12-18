@@ -113,27 +113,11 @@ static void AES_FPGA_xcrypt_buffer(int enc, const uint8_t* key, const uint8_t* i
 	// set key length and select encryption or decryption operation in the configuration register 
 	// register is write-only, can't read and modify!
 	// STUDENTS TASK
-	uint32_t config = 0;
 
-    // Encrypt / Decrypt
-    if (enc == AES_ENC) {
-        config |= (1u << CONFIG_ENCDEC_BIT);    // 1 = Encrypt
-    } else {
-        // 0 = Decrypt => Bit bleibt 0
-    }
-
-    config |= (AES_256_BIT_KEY << CONFIG_KEYLEN_BIT);
-
-    aes_cbc_reg[AES_CONFIG_REG] = config;
 
 	// initialize key expansion
 	// STUDENTS TASK
-	aes_cbc_reg[AES_CTRL_REG] = (1u << CTRL_INIT_BIT);
 
-	// Auf Ready-Bit im Status-Register warten
-    while ( (aes_cbc_reg[AES_STATUS_REG] & (1u << STATUS_READY_BIT)) == 0 ) {
-        // busy wait
-    }
 
 	// Write the plaintext (or ciphertext) block to the block registers
 	if (length > 16) {
@@ -141,31 +125,18 @@ static void AES_FPGA_xcrypt_buffer(int enc, const uint8_t* key, const uint8_t* i
 		length = 16;
 	}
 	// STUDENTS TASK
-	for (uint32_t i = 0; i < (16u / DATA_BUS_SIZE); i++) {
-        aes_cbc_reg[AES_BLOCK_REG(i)] = buf_word[i];
-    }
 
 	// Write the IV to the IV registers
 	// STUDENTS TASK
-	for (uint32_t i = 0; i < (IV_SIZE / DATA_BUS_SIZE); i++) {
-        aes_cbc_reg[AES_IV_REG(i)] = iv_word[i];
-    }
 
 	// Start block processing
 	// STUDENTS TASK
-	aes_cbc_reg[AES_CTRL_REG] = (1u << CTRL_NEXT_BIT);
 
 	// wait for valid flag
 	// STUDENTS TASK
-	while ( (aes_cbc_reg[AES_STATUS_REG] & (1u << STATUS_VALID_BIT)) == 0 ) {
-        // busy wait
-    }
 
 	//Read out the ciphertext block from the result registers
 	// STUDENTS TASK
-	for (uint32_t i = 0; i < (16u / DATA_BUS_SIZE); i++) {
-        buf_word[i] = aes_cbc_reg[AES_RESULT_REG(i)];
-    }
 }
 
 /****************************************************************************************

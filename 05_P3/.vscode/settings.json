@@ -1,5 +1,11 @@
 {
-    "files.associations": {
-        "time.h": "c"
-    }
+    "C_Cpp.default.compilerPath": "C:\\Program Files (x86)\\Arm GNU Toolchain aarch64-none-linux-gnu\\12.3 rel1\\bin",
+    "C_Cpp.default.customConfigurationVariables": {},
+    "C_Cpp.default.includePath": [
+        "${env:SYS_ROOT}\\..\\cross-compile\\freertos10_xilinx_psu_cortexr5_0\\bspinclude\\include",
+        "${env:SYS_ROOT}\\..\\cross-compile\\standalone_psu_cortexr5_0\\bspinclude\\include",
+        "C:\\Program Files (x86)\\Arm GNU Toolchain aarch64-none-linux-gnu\\12.3 rel1\\aarch64-none-linux-gnu\\libc\\usr\\include",
+        "${env:SYS_ROOT}\\cortexa72-cortexa53-xilinx-linux\\usr\\include",
+        "${env:SYS_ROOT}\\cortexa72-cortexa53-xilinx-linux\\usr\\include\\linux"
+    ]
 }

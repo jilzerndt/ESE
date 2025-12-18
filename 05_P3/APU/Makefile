@@ -15,7 +15,7 @@ OBJ_FILES = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRC_FILES))
 ifdef OS
 	RM = del /Q
 	FixPath = $(subst /,\,$1)
-	MKDIR = mkdir $(subst /,\,$(1)) > nul 2>&1 || (exit 0)
+	MKDIR = mkdir $(subst /,\,$1) > nul 2>&1 || (exit 0)
 	CC = aarch64-none-linux-gnu-gcc
 else
 	ifeq ($(shell uname), Linux)
@@ -28,7 +28,7 @@ endif
 
 
 $(OBJ_DIR)/%.o: %.c $(wildcard $(SRC_DIR)/*.h)
-	$(call MKDIR,$(DIRS))
+	$(call MKDIR,$(call FixPath,$(DIRS)))
 	$(CC) $(CFLAGS) -c $(call FixPath,$<) -o $(call FixPath,$@)
 
 $(NAME).elf: $(OBJ_FILES)
@@ -41,7 +41,7 @@ clean:
 	$(RM) $(call FixPath,$(NAME).elf)
 
 install: $(NAME).elf
-	scp -O $(NAME).elf $(TARGET):/home/ese/
+	scp -O -pw ese $(NAME).elf $(TARGET):/home/ese/
 	ssh $(TARGET) "chmod +x /home/ese/$(NAME).elf"
 
 test:

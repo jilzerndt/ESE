@@ -28,9 +28,6 @@
 
 // BEGIN STUDENTS: Add required header files
 
-#include "output.h"
-#include "wakeup_timer.h"
-#include "ese_aes.h"
 
 // END STUDENTS
 
@@ -44,12 +41,6 @@
 
 // BEGIN STUDENTS: Global variables initialization
 
-typedef enum {
-    STATE_IDLE,
-    STATE_AES
-} t_state;
-
-static char aes_message[256] = {0};
 
 // END STUDENTS
 
@@ -77,34 +68,12 @@ int main(int argc, char *argv[]) {
     power_init();
 	
 	// BEGIN STUDENTS: To be programmed 
-    
-    output_init();
-    setOutputEnable(ENABLE);
 	
-    t_state state = STATE_IDLE;
 	
 	// END STUDENTS
 	while(1) {
 		// BEGIN STUDENTS: To be programmed 
-        
-        wakeup_init(0x3E80);
-        power_enter_sleep();
 		
-        switch(state)
-        {
-            case STATE_IDLE:
-                for (volatile uint32_t i = 0; i < 8000000; i++) {
-                    __asm volatile ("nop");
-                }
-                state = STATE_AES;
-                break;
-            case STATE_AES:
-                for (uint32_t i = 0; i < 2000u; i++) {
-                    runAES(aes_message, sizeof(aes_message));
-                }
-                state = STATE_IDLE;
-                break;
-        }
 		
 		// END STUDENTS
 	}

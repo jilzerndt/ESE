@@ -28,7 +28,7 @@ endif
 
 
 $(OBJ_DIR)/%.o: %.c $(wildcard $(SRC_DIR)/*.h)
-	$(call MKDIR,$(DIRS))
+	$(call MKDIR,$(call FixPath,$(DIRS)))
 	$(CC) $(CFLAGS) -c $(call FixPath,$<) -o $(call FixPath,$@)
 
 $(NAME).elf: $(OBJ_FILES)
