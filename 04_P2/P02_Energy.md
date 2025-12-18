@@ -59,8 +59,8 @@ Wie viele Tastköpfe benötigen Sie, um die Spannung zu messen?
 c. Berechnen Sie den Energieverbrauch für die beiden Zustände Ihres
 Programms.
 
-LEDs an: _____________
-LEDs aus: _____________
+LEDs an: 5.3mWs
+LEDs aus: 3.6mWs
 
 ### Aufgabe 2: AES-Verschlüsselung
 In dieser Aufgabe messen Sie den Energieverbrauch für die Ver- und Entschlüsselung eines
@@ -86,15 +86,61 @@ Verwenden Sie für die Implementierung wieder eine FSM.
 
 1) Wie viele Zustände benötigt die FSM? Benennen Sie diese.
 
+**Lösung:** 2 Zustände: IDLE und AES
+
 2) Zeichnen Sie das Zustandsdiagramm der FSM mit Bedingungen für die Zustandsübergänge.
 
-3) Implementeren Sie die FSM.
+**Lösung:**
+```mermaid
+stateDiagram-v2
+    [*] --> STATE_IDLE
+
+    STATE_IDLE --> STATE_AES: After NOP loop
+    STATE_AES --> STATE_IDLE: After AES operations
+
+    note right of STATE_IDLE
+        - Sleep 1 second
+        - Wake up
+        - Run NOP loop (~1 second)
+    end note
+
+    note right of STATE_AES
+        - Sleep 1 second
+        - Wake up
+        - Run 2000 AES operations
+    end note
+```
+
+3) Implementeren Sie die FSM. siehe code -> main.c 93-107
 
 4) Messen und berechnen Sie den Energieverbrauch für die AES-Verschlüsselung mit
 verschiedenen Nachrichtengrössen.
 
+**Lösung:** 
+- V_measured = voltage across measurement resistor (from oszii)
+- I = V_measured / R_measurement
+- P = V_supply * I
+- E = P * t
+
 5) Zeichnen Sie ein Diagramm, das den Energieverbrauch für mindestens 5
 verschiedene Nachrichtengrössen zeigt.
+
+Power consumption: P_sleep << P_idle < P_aes
+
+linear increase of E_aes with message size (genaue Steigung kommt auf ein paar Faktoren an, aber sollte grundsätzlich immer ziemlich linear sein)
+
+- sleep: 180mV
+- busy wait: 300mV
+- AES: 330mV
+
+für 2000 blk:
+- 32b: 1.2s
+- 64b: 2.3s
+- 128b: 4.4s
+- 256b: 8.9s
+
+--> yay wirklich linear!
+
 
 ## Bewertungskriterien:
 - Sie verbinden die Oszilloskop-Tastköpfe sinnvoll mit dem Discovery Kit und konﬁgurieren das Oszilloskop korrekt für die Messungen.
