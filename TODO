@@ -20,23 +20,6 @@
 [x] implement event handler (real sensors)
 [] run and show in lab
 
-## conclusion U2 and U3 
-cannot test on hardware because Ubuntu but should work?
-
-**Comparison Summary**
-
-| Feature | CT Board (Emulation) | Washing Machine (Real HW) |
-|---------|---------------------|---------------------------|
-| **Output Port** | `CT_LED->WORD` | `CT_GPIO->OUT.BYTE.P1` |
-| **Output Logic** | Active-HIGH | Active-LOW |
-| **Output Hardware** | 32 LEDs | 8 GPIO pins |
-| **Input Port** | `CT_DIPSW->BYTE.S7_0` | `CT_GPIO->IN.BYTE.P1` |
-| **Input Hardware** | DIP switches | GPIO pins with sensors |
-| **Purpose** | Testing/debugging | Real hardware control |
-| **Init Value** | `0x00` (all off) | `0xFF` (all off, active-low) |
-| **Button Edge** | Positive (switch ON) | Negative (button release) |
-| **Motor Control** | 4 combined states | Direction + Speed separate |
-
 ## P2 - Energy measurement
 ### aufgabe 1 - setup
 [x] setup für Messung (please fucking help)
