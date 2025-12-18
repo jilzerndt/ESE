@@ -1,0 +1,41 @@
+# TODOs and overview
+
+## P1 - Setup HW
+[x] write helloworld and run (if it doesn't work restart laptop and try again that worked last time)
+
+## U1 - Traffic Light and Washing Machine Design
+[x] Design Traffic light and how to improve it
+[x] design state machine for functioning washign machine 
+[x] fix washing machine diagram
+[] send new diagram per mail?
+
+## U2 - Implement Washing machine for CT board
+[x] implement state machine
+[x] implement action handler (leds)
+[x] implement event handler (switches)
+[] run on CT board and show in lab
+
+## U3 - implement washing machine for new HW (HW abstraction)
+- state machine stays exactly the same
+[x] implement action handler (gpio and active low)
+[x] implement event handler (real sensors)
+[] run on other HW and show in lab
+
+## P2 - Energy measurement
+[x] implement state machine
+[x] energy measurements
+[x] low power mode
+[x] oszi -> voltage curves analysis
+[] understand energy cost of cryptography
+[] answer questions in pdf
+[] show in lab
+
+## P3 - AES auf APU und RPU
+[] AES implementation (APU)
+[] AES implementation (RPU) -> remote procedure
+[] timing measurements RPU
+[] different message sizes
+[] secret message
+[] performance comparison
+
+## P4 - AES in FPGA und CSU
