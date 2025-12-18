@@ -71,8 +71,7 @@ Das Programmgerüst für diesen Teil liegt im Unterverzeichnis 'APU'. Sie finden
    
    Was machen diese Funktionen (gesucht: zwei Schritte)?
    
-   **Lösung:**
-   AES_APU_init_ctx_iv(key, iv);
+   **Lösung:** AES_APU_init_ctx_iv(key, iv);
    1. Schlüssel vorbereiten
    2. Initialisierungsvektor setzen
 
@@ -124,7 +123,7 @@ Für die Ausführung einer Remote-Procedure sind mehrere Komponenten notwendig, 
 3) Untersuchen Sie die Datenstruktur aes_datatype der remote procedure message (rpmsg). Wie viele Bytes an Daten werden zur remote procedure übertragen? Welche Daten sind enthalten?
 
    **Lösung:**
-   50 bytes + text
+   50 bytes (fix) + text (variable)
    enthalten decrypt-flag, Schlüssel, Initialisierungsvektor, textlänge udn text
    
    Welche Daten schickt die remote procedure an den caller zurück?
@@ -136,13 +135,11 @@ Für die Ausführung einer Remote-Procedure sind mehrere Komponenten notwendig, 
 
    Wie wird unterschieden, ob gerade decryption oder encryption ausgeführt werden soll?
    
-   **Lösung:**
-   dec flag
+   **Lösung:** `dec` flag: 0 = encrypt, 1 = decrypt
 
    Wie kann die remote procedure wieder entfernt werden?
 
-   **Lösung:**
-    send shutdown msg
+   **Lösung:** send shutdown msg
 
 5) Kopieren Sie nun die Firmware ("aes_rpu_rtos.elf") wie gewohnt auf das Ultra96-Board.
 
@@ -200,13 +197,13 @@ Nun brauchen wir noch das Gegenstück auf der Linux-Seite, das den Treiber für 
 
 4) Überlegen Sie bei der Zeitmessung, an welchen Punkten in der Software Sie einen Timestamp nehmen möchten, um die Performance mit jener der AES-Software auf dem A53 vergleichen zu können. Schauen Sie sich dazu die Funktionen AES_RPU_start und AES_RPU_stop etwas genauer an. Wo entsteht eine grosse Verzögerung?
 
-   **Lösung:** sleep(2) in stop
+   **Lösung:** sleep(2) in stop (macht halt nicht viel sinn das mitzuzählen) aber wichtig für graceful shutdown
 
 5) Das Setup der Remote Procedure macht unsere Software etwas komplexer. Beginnend bei der main-Funktion folgen Sie dem Programmablauf:
 
    Was macht der Funktionsaufruf "AES_RPU_start()"?
    
-   **Lösung:** RPU aufsetzen
+   **Lösung:** RPU aufsetzen (load driver, open rpmsg control device and and create endpoint for comm.)
    
    Schauen Sie auf dem ultra96-Board unter dem Pfad, der in AES_RPU_start() angegeben ist, ob die Firmware bereits installiert/gestartet ist. (z.B. > cat firmware)
    
@@ -215,9 +212,9 @@ Nun brauchen wir noch das Gegenstück auf der Linux-Seite, das den Treiber für 
    **Lösung:** write(fd_glob, aes_data, data_size)
    und nein (glaube?) denn copy key zb ist auch wichtig
 
-6) Messen Sie an geeigneter Stelle die Performance der Remote Procedure auf dem R5 für die gleichen Fälle (16-Byte-, 64-Byte-, 240-Byte-Nachrichten) wie für die Ausführung auf dem A53 und vergleichen Sie die gemessenen Zeiten. Welche Schritte (Start, Encrypt, Stop) benötigen wie viel Zeit?
+6) Messen Sie an geeigneter Stelle die Performance der Remote Procedure auf dem R5 für die gleichen Fälle (16-Byte-, 64-Byte-, 240-Byte-Nachrichten) wie für die Ausführung auf dem A53 und vergleichen Sie die gemessenen Zeiten. Welche Schritte (Start, Encrypt, Stop) benötigen wie viel Zeit? **siehe excel**
 
-7) Diskutieren Sie die Messresultate mit dem Dozenten. Wo sehen Sie Optimierungsmöglichkeiten für die Performance?
+7) Diskutieren Sie die Messresultate mit dem Dozenten. Wo sehen Sie Optimierungsmöglichkeiten für die Performance? **Lösung** mehrere Faktoren, ich denke sicher der overhead bei kleinen Nachrichten wegen RPMsg ist nicht vorteilhaft
 
 ## Bewertungskriterien:
 
