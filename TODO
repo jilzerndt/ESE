@@ -7,12 +7,11 @@
 [x] Design Traffic light and how to improve it
 [x] design state machine for functioning washign machine 
 [x] fix washing machine diagram
-[] send new diagram per mail?
 
 ## U2 - Implement Washing machine for CT board
-[x] implement state machine
-[x] implement action handler (leds)
-[x] implement event handler (switches)
+[] implement state machine (again??????)
+[] implement action handler (leds)
+[] implement event handler (switches)
 [] run on CT board and show in lab
 
 ## U3 - implement washing machine for new HW (HW abstraction)
@@ -22,20 +21,30 @@
 [] run on other HW and show in lab
 
 ## P2 - Energy measurement
-[x] implement state machine
-[x] energy measurements
-[x] low power mode
-[x] oszi -> voltage curves analysis
-[] understand energy cost of cryptography
-[] answer questions in pdf
+### aufgabe 1 - setup
+[] setup für Messung (please fucking help)
+### aufgabe 2 - aes verschlüsselung
+[] theorie fragen antworten
+[] implement state machine
+[] energy measurements and diagram mit oszi
 [] show in lab
 
 ## P3 - AES auf APU und RPU
-[] AES implementation (APU)
-[] AES implementation (RPU) -> remote procedure
+[] understand background context
+### APU
+[] understand code
+[] Zeitstempel setzen und builden
+[] auf board ausführen
+[] time measurements for different message sizes
+### RPU
+[] understand code and answer theory questions in pdf
+[] auf board schmeissen
+[] A53 step-by-step
+[] vs code und ergänzen was fehlt
+[] theorie fragen RPU
 [] timing measurements RPU
-[] different message sizes
-[] secret message
-[] performance comparison
+[] performance comparison und mit dozenten diskutieren
 
 ## P4 - AES in FPGA und CSU
+
+ii check garnix meh
