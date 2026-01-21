@@ -580,3 +580,130 @@ The design space represents all possible implementation choices for an embedded 
 7. **Three example systems** illustrate concepts: traffic light control, washing machine, and AES encryption
 
 8. **Design space has many dimensions** - primary triangle of energy/cost/performance, plus security, safety, latency, etc.
+
+## Possible Exam Questions
+
+### Basic Recall / Definitions
+
+1. **What is an Embedded System?** Define the term and list its key characteristics.
+
+2. **What are the six main properties that distinguish embedded systems?** List and briefly explain each property.
+
+3. **Define the term "Design Space" in the context of embedded systems.** What are the three primary dimensions?
+
+4. **What is a Real-Time Operating System (RTOS)?** How does it differ from a general-purpose operating system?
+
+5. **What components make up the System Bus?** Name and describe the function of each.
+
+6. **Define the following terms:**
+   - Wireless Sensor Network (WSN)
+   - Hardware Accelerator
+   - Bare-metal Application
+   - Built-in Application
+   - Bill of Materials (BOM)
+
+7. **What are the main components of the Ultra96-V2 board?** List the processor types and their specifications.
+
+### Comprehension / Explanation
+
+8. **Explain the hierarchy of Computer Engineering.** How does it bridge Microelectronics and Computer Science? What abstraction levels are involved?
+
+9. **Explain the concept "Hardware and Software work together to create an application."** Why is this particularly important for embedded systems?
+
+10. **Explain why embedded systems are described as "resource-limited."** What resources are typically constrained and why does this matter?
+
+11. **Describe the Sensing-Processing-Acting architecture** shown in the embedded system hardware diagram. How do the components interact?
+
+12. **Explain the statement: "In the Embedded Systems world, there is no single solution to a problem."** Why is this the case?
+
+13. **Explain what is meant by "HW and SW architectures influence each other"** in embedded systems design.
+
+14. **Describe the systematic approach to Embedded System Design** as presented in the Advance Organizer diagram.
+
+### Application
+
+15. **Given a traffic light control system scenario:** What embedded system components would you need? Consider sensors, actuators, processing, and communication requirements.
+
+16. **For a battery-powered sensor node:** Which design point in the design space triangle (Energy-Cost-Performance) would you prioritize? Justify your choice.
+
+17. **A washing machine needs to control temperature, water level, and motor speed.** What types of sensors and actuators would be required? Would you use analog or digital sensors?
+
+18. **You need to implement AES encryption with maximum performance.** Which implementation approach would you choose from the Ultra96 options (APU software, RPU software, FPGA, CSU)? Why?
+
+19. **Design a simple embedded system** for monitoring room temperature and controlling a heater. What components are needed? Draw a basic block diagram.
+
+### Analysis / Comparison
+
+20. **Compare and contrast Embedded Systems with General-Purpose Computers.** Provide at least 5 differences with examples.
+
+21. **Compare the four design options shown in the design space:** Low-Energy CPU, 1 CPU, 2 CPUs, and 1 CPU + FPGA. What are the trade-offs for each?
+
+22. **Analyze the trade-offs between the three vertices of the design space triangle:** Energy, Cost, and Performance. Can you optimize all three simultaneously? Why or why not?
+
+23. **Compare the ARM Cortex-A53 (APU) with the ARM Cortex-R5 (RPU)** on the Ultra96 board. When would you use each processor type?
+
+24. **Compare RTOS with bare-metal programming.** What are the advantages and disadvantages of each approach?
+
+25. **The extended design space includes 10 dimensions** (cost, performance, latency, energy, security, safety, etc.). Explain why considering only Energy-Cost-Performance might be insufficient for real-world embedded systems.
+
+### Synthesis / Design Decisions
+
+26. **You are designing an embedded system for a medical device** that monitors patient vital signs. Which properties of embedded systems are most critical? What design space dimensions must you prioritize?
+
+27. **A client wants the cheapest possible embedded system for their product.** What compromises might you have to make in other design space dimensions? What questions would you ask the client?
+
+28. **Design a multi-processor solution** for a computationally intensive embedded application. Would you use homogeneous (same type) or heterogeneous (different types) processors? Justify your decision.
+
+29. **You need to add a new feature to an existing embedded system,** but it's already at maximum CPU utilization. What design space options could you explore to accommodate the new feature?
+
+### Critical Thinking / Trade-offs
+
+30. **Why might using an FPGA be advantageous** despite its higher cost compared to a standard microcontroller?
+
+31. **Explain the statement: "Application is defined by the software."** How does this relate to the flexibility and limitations of embedded systems?
+
+32. **In what situations would you choose 2 CPUs over 1 CPU + FPGA,** even though both might offer similar performance improvements?
+
+33. **Discuss the tension between "Built-in Applications" and flexibility** in embedded systems. How does this affect product lifecycle and maintenance?
+
+34. **Why do embedded systems often have minimal or no user interface?** What are the implications for testing and debugging?
+
+### Scenario-Based Questions
+
+35. **You are consulting for a startup building a wearable fitness tracker.** They want maximum battery life, low cost, and good performance. Walk through how you would navigate the design space to find an appropriate solution.
+
+36. **An existing traffic light system needs to be upgraded** to support vehicle detection and adaptive timing. How would you approach this from a design space perspective? What new components might be needed?
+
+37. **Compare the three course project examples** (Traffic Light, Washing Machine, AES). What embedded system properties does each one emphasize? Which design space dimensions are most critical for each?
+
+38. **A safety-critical embedded system (e.g., automotive braking)** has different requirements than a consumer device. How would this affect your position in the extended 10-dimensional design space?
+
+### Connections & Integration
+
+39. **How does the concept of Design Space Exploration** (from lectures 11-12) relate to the design space triangle introduced in this lecture?
+
+40. **The lecture mentions that requirements serve as the starting point for ES design.** How do functional and non-functional requirements influence the choice of a design point in the design space?
+
+41. **Explain the relationship between** the hardware components shown in the system architecture diagram and the Design Space concept.
+
+42. **How does the concept of "resource-limited systems"** connect to the need for exploring the design space and making trade-offs?
+
+### Advanced Understanding
+
+43. **Explain why deterministic behavior is important** for many embedded systems. How does this relate to the use of RTOS vs. general-purpose OS?
+
+44. **Discuss the implications of Moore's Law ending** for embedded systems design. Will the design space become more or less complex?
+
+45. **The Ultra96 board includes APU, RPU, GPU, CSU, and FPGA.** Propose a system that would actually utilize all five processing elements. What would each one do?
+
+46. **Analyze the evolution from single-purpose hardware to programmable embedded systems.** What are the benefits and drawbacks of this evolution from a design space perspective?
+
+47. **How might IoT (Internet of Things) trends affect** the design space for future embedded systems? Which dimensions might become more critical?
+
+48. **Discuss the role of modeling (software & hardware)** in navigating the design space effectively. Why can't we just build and test all possible implementations?
+
+### Meta-Questions About the Course
+
+49. **Explain the pedagogical structure of the ESE course** as represented by the Advance Organizer diagram. How do the different course components (lectures, exercises, projects) relate to each other?
+
+50. **Why does the course use two different hardware platforms** (CT1 board vs Ultra96)? What different aspects of embedded systems do they teach?
