@@ -1,0 +1,30 @@
+I have an oral exam in the university course ESE (Embeded Systems Engineering). I am allowed to bring some handwritten notes to the exam, which I can use to help me answer the questions. Help me identify the relevant contents of each lecture that I should write down. The professors have stated that the most important thing is for us to know all technical terms, understand the concepts behind everything and in short: that they can hold an expert discussion with us. 
+
+For each lecture and lab complete the following tasks:
+- Fully analyze the lecture contents (the entire document!!) or in case of a lab analyze the lab instructions as well as the solutions (relevant source files in code)
+- Identify the most important parts that need to be included in the notes I am bringing, including:
+	- Concepts, technical terms and definitions
+	- important graphics and diagrams
+	- formulas and procedures/processes
+	- comparisons between concepts/procedures/solutions
+	- any other possibly important stuff
+- create a new markdown file for each lecture containing everything listed above.-
+
+All lectures are located in the directory 'Lectures'. for the labs I have listed the respective directories. Go through the lectures/labs in the order that I have listed them here:
+
+- "01_EmbeddedSystems.pdf"
+- "02_SoftwareParadigms.pdf"
+- "01_P1"
+- "03_Requirements.pdf"
+- "04_Modelling.pdf"
+- "05_DevelopmentProcesses.pdf"
+- "06_NonFunctionalRequirements.pdf"
+- "08_Energy.pdf"
+- "09_Performance.pdf"
+- "10_Introduction_FPGA.pdf"
+- "11_DSE_Intro.pdf"
+- "12_DSE_Search.pdf"
+- "13_RTOS_Scheduling.pdf"
+- "14_Multi-Prozessor-Systeme.pdf"
+
+Start with the first lecture ("01_EmbeddedSystems.pdf") to let me verify your output before continuing with the rest. 
