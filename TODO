@@ -19,14 +19,18 @@ All lectures are located in the directory 'Lectures'. for the labs and exercises
 - "04_Modelling.pdf"
 - "02_U01"
 - "05_DevelopmentProcesses.pdf"
-- "03_U2"
 - "06_NonFunctionalRequirements.pdf"
+- "03_U2_U3" (contains 2 seperate exercises!! they are connected, but create seperate markdown files)
 - "08_Energy.pdf"
+- "04_P2"
 - "09_Performance.pdf"
+- "05_P3"
 - "10_Introduction_FPGA.pdf"
 - "11_DSE_Intro.pdf"
 - "12_DSE_Search.pdf"
+- "06_P4"
 - "13_RTOS_Scheduling.pdf"
+- "07_P5"
 - "14_Multi-Prozessor-Systeme.pdf"
 
 Start with the first lecture ("01_EmbeddedSystems.pdf") to let me verify your output before continuing with the rest. 
