@@ -26,11 +26,11 @@ All lectures are located in the directory 'Lectures'. for the labs and exercises
 - "09_Performance.pdf"
 - "05_P3"
 - "10_Introduction_FPGA.pdf"
+- "06_P4"
 - "11_DSE_Intro.pdf"
 - "12_DSE_Search.pdf"
-- "06_P4"
-- "13_RTOS_Scheduling.pdf"
 - "07_P5"
+- "13_RTOS_Scheduling.pdf"
 - "14_Multi-Prozessor-Systeme.pdf"
 
 Start with the first lecture ("01_EmbeddedSystems.pdf") to let me verify your output before continuing with the rest. 
